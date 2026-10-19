@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# merge (CRM + project & task workspace)
 
-## Getting Started
+Merge is a single workspace for customer relationships and delivery: companies,
+contacts, deals, projects, tasks, roadmaps, activity and team management. Think
+“CRM + work OS” in one Next.js app.
 
-First, run the development server:
+## Modules
+
+| Area | Routes |
+| --- | --- |
+| Dashboard | `/dashboard` |
+| CRM | `/crm/companies`, `/crm/contacts`, `/crm/deals` (+ detail pages) |
+| Customers | `/customers/[companyId]` |
+| Work | `/work/projects`, `/work/tasks`, `/work/roadmaps` |
+| Activity | `/activity` |
+| Team & settings | `/team`, `/settings` |
+
+## Features
+
+- Credentials-based auth with NextAuth (JWT sessions).
+- Role-aware navigation and protected `(app)` route group.
+- Drag-and-drop kanban/task views (`@dnd-kit`), charts (`recharts`),
+  command palette (`cmdk`), date handling (`date-fns`).
+- REST route handlers under `src/app/api/` for companies, contacts, deals,
+  projects, tasks, activity, notifications and global search.
+- Deal-won automation hook (`/api/automation/deal-won`).
+
+## Stack
+
+Next.js 15 (App Router, Turbopack), React 19, TypeScript, Tailwind CSS 4,
+shadcn/Base UI + Radix, NextAuth 5, GraphQL Request, bcryptjs, recharts.
+
+## Run locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open <http://localhost:3000> → redirects to `/login` or `/dashboard`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build
+npm start
+npm run lint
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Configuration
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Copy the example env if present (`.env.local`) and set `AUTH_SECRET` plus your
+data source. `.env.local` is git-ignored.
